@@ -15,9 +15,6 @@ local NGX_OK       = 0
 
 
 local ZONE_INDEX   = 1
-local func         = {}
-local _M           = {}
-func.__index       = func
 
 
 if not pcall(ffi.typeof, "ngx_str_t") then
@@ -624,27 +621,31 @@ local function shdict_get_keys(zone, attempts)
 end
 
 
-func.get_keys           = shdict_get_keys
-func.get                = shdict_get
-func.get_stale          = shdict_get_stale
-func.set                = shdict_set
-func.safe_set           = shdict_safe_set
-func.add                = shdict_add
-func.safe_add           = shdict_safe_add
-func.replace            = shdict_replace
-func.delete             = shdict_delete
-func.lpush              = shdict_lpush
-func.rpush              = shdict_rpush
-func.lpop               = shdict_lpop
-func.rpop               = shdict_rpop
-func.llen               = shdict_llen
-func.incr               = shdict_incr
-func.flush_expired      = shdict_flush_expired
-func.flush_all          = shdict_flush_all
-func.expire             = shdict_expire
-func.ttl                = shdict_ttl
+local func = {
+    get_keys        = shdict_get_keys,
+    get             = shdict_get,
+    get_stale       = shdict_get_stale,
+    set             = shdict_set,
+    safe_set        = shdict_safe_set,
+    add             = shdict_add,
+    safe_add        = shdict_safe_add,
+    replace         = shdict_replace,
+    delete          = shdict_delete,
+    lpush           = shdict_lpush,
+    rpush           = shdict_rpush,
+    lpop            = shdict_lpop,
+    rpop            = shdict_rpop,
+    llen            = shdict_llen,
+    incr            = shdict_incr,
+    flush_expired   = shdict_flush_expired,
+    flush_all       = shdict_flush_all,
+    expire          = shdict_expire,
+    ttl             = shdict_ttl,
+}
+func.__index = func
 
 
+local _M = {}
 do
     local mt = {
         __index = function(tb, name)
