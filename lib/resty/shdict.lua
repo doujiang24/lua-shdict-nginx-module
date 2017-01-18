@@ -653,11 +653,12 @@ do
                 return nil, err
             end
 
-            tb[name] = {
-                [ZONE_INDEX] = zone
-            }
-            setmetatable(tb[name], func)
-            return tb[name]
+            local dict = { [ZONE_INDEX] = zone }
+
+            tb[name] = dict
+            setmetatable(dict, func)
+
+            return dict
         end
     }
     setmetatable(_M, mt)
